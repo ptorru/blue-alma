@@ -5,9 +5,13 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/London
 
+# Trying to make it work for arm64:
 # https://askubuntu.com/questions/804997/dpkg-error-processing-package-libc-bin-configure
-# RUN rm /var/cache/ldconfig/aux-cache
-# RUN /sbin/ldconfig
+RUN rm /var/cache/ldconfig/aux-cache
+
+# But fails, the following will just hang there forever:
+# [linux/arm64  3/12] RUN /sbin ldconfig                                         1417.6s
+RUN /sbin/ldconfig
 
 RUN apt-get update
 #RUN apt-get upgrade --yes
